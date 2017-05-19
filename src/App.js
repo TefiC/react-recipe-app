@@ -3,23 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import $ from 'jquery';
 import {} from 'react-bootstrap/lib';
-// class App extends Component {
-//   render() {
-//     return (
-//       <div className="App">
-//         <div className="App-header">
-//           <img src={logo} className="App-logo" alt="logo" />
-//           <h2>Welcome to React</h2>
-//         </div>
-//         <p className="App-intro">
-//           To get started, edit <code>src/App.js</code> and save to reload.
-//         </p>
-//       </div>
-//     );
-//   }
-// }
 
-// export default App;
 
 var MainComponent = React.createClass({
 	
@@ -65,7 +49,7 @@ var RecipeHeader = React.createClass({
 		
 		var id = '#' + this.props.recipeId.toString() + '';
 		
-		$(id).css('backgroundColor', 'blue');
+		$(id).slideToggle(1000);
 	},
 	
 	render: function() {
