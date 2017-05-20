@@ -45,9 +45,19 @@ var MainComponent = React.createClass({
 	
 	deleteRecipe: function(recipeName) {
 		
+		alert('deleting ' + recipeName)
+		
 		var recipesDict = reactLocalStorage.getObject('recipesDict');
 		delete recipesDict[recipeName]
+		
+		console.log('after deleting');
+		
+		console.log(recipesDict);
+		
 		reactLocalStorage.setObject('recipesDict', recipesDict);
+		
+		console.log('in local storage');
+		console.log( reactLocalStorage.getObject('recipesDict'));
 		
 		this.setState({'recipesDict': reactLocalStorage.getObject('recipesDict'), 'showModal': this.state.showModal});
 	},
@@ -55,18 +65,23 @@ var MainComponent = React.createClass({
 	render: function() {
 		
 		var recipesDict = this.state.recipesDict;
+		
+		console.log('Inside render');
+		console.log(recipesDict);
+		
 		var recipeId = 0
 		var updateLocalStorage = this.updateLocalStorage;
 		var deleteRecipe = this.deleteRecipe;
 		
 		var recipesArray = Object.keys(recipesDict).map(function(recipe) {
+			console.log('recipe is being made', recipe);
 			recipeId += 1
 			return <RecipeContainer onDeleteRecipe={deleteRecipe} onUpdateLocalStorage={updateLocalStorage} recipeName={recipe} recipeIngredients={recipesDict[recipe]} recipeId={recipeId}/>
 		});
 		
 		return (
 			<div className="appMainDiv">
-				<h1 className="appTitle"> Menu </h1>
+				<h1 className="appTitle"> My Recipes </h1>
 				<ul>{recipesArray}</ul>
 				<RecipeBodyButton  buttonStyle='success' buttonTitle='Add recipe' onModalToggle={this.toggleAddModal} />
 				<span className="addButtonContainer">
@@ -102,8 +117,8 @@ var RecipeContainer = React.createClass({
 	render: function() {
 		return (
 			<div>
-				<RecipeHeader recipeName={this.state.recipeName} recipeId={this.props.recipeId}/>
-				<RecipeBody recipeName={this.state.recipeName} recipeIngredients={this.state.recipeIngredients} recipeId={this.props.recipeId} onUpdateContainer={this.updateContainer} onDeleteRecipe={this.props.onDeleteRecipe}/>
+				<RecipeHeader recipeName={this.props.recipeName} recipeId={this.props.recipeId}/>
+				<RecipeBody recipeName={this.props.recipeName} recipeIngredients={this.props.recipeIngredients} recipeId={this.props.recipeId} onUpdateContainer={this.updateContainer} onDeleteRecipe={this.props.onDeleteRecipe}/>
 			</div>
 		);
 	}
@@ -124,6 +139,7 @@ var RecipeHeader = React.createClass({
 	},
 	
 	render: function() {
+		console.log('Inside the header', this.props.recipeName);
 		return (
 			<div className="recipeHeader" onClick={this.handleUserClick}>
 				<p className="headerTextContainer">{this.props.recipeName}</p>
