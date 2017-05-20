@@ -15,8 +15,11 @@ var MainComponent = React.createClass({
 			'Pizza': ['Oregano', 'Cheese'],
 			'Donuts': ['Chocolate', 'Butter']
 		}
-	
-		reactLocalStorage.setObject('recipesDict', recipesDictValue);
+		
+		if (reactLocalStorage.getObject('recipesDict') === {}) {
+			reactLocalStorage.setObject('recipesDict', recipesDictValue);
+		}
+		
 	},
 	
 	getInitialState: function() {
@@ -41,6 +44,7 @@ var MainComponent = React.createClass({
 	},
 	
 	deleteRecipe: function(recipeName) {
+		alert('deleting');
 		var recipesDict = reactLocalStorage.getObject('recipesDict');
 		delete recipesDict[recipeName]
 		reactLocalStorage.setObject('recipesDict', recipesDict);
@@ -385,6 +389,7 @@ var RecipeDeleteModal = React.createClass({
 	
 	handleDelete: function() {
 		this.props.onDeleteRecipe(this.props.recipeName);
+		this.props.onHide();
 	},
 
 	render: function() {
