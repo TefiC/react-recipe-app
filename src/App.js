@@ -45,19 +45,10 @@ var MainComponent = React.createClass({
 	
 	deleteRecipe: function(recipeName) {
 		
-		alert('deleting ' + recipeName)
-		
 		var recipesDict = reactLocalStorage.getObject('recipesDict');
 		delete recipesDict[recipeName]
 		
-		console.log('after deleting');
-		
-		console.log(recipesDict);
-		
 		reactLocalStorage.setObject('recipesDict', recipesDict);
-		
-		console.log('in local storage');
-		console.log( reactLocalStorage.getObject('recipesDict'));
 		
 		this.setState({'recipesDict': reactLocalStorage.getObject('recipesDict'), 'showModal': this.state.showModal});
 	},
@@ -74,7 +65,6 @@ var MainComponent = React.createClass({
 		var deleteRecipe = this.deleteRecipe;
 		
 		var recipesArray = Object.keys(recipesDict).map(function(recipe) {
-			console.log('recipe is being made', recipe);
 			recipeId += 1
 			return <RecipeContainer onDeleteRecipe={deleteRecipe} onUpdateLocalStorage={updateLocalStorage} recipeName={recipe} recipeIngredients={recipesDict[recipe]} recipeId={recipeId}/>
 		});
@@ -139,7 +129,6 @@ var RecipeHeader = React.createClass({
 	},
 	
 	render: function() {
-		console.log('Inside the header', this.props.recipeName);
 		return (
 			<div className="recipeHeader" onClick={this.handleUserClick}>
 				<p className="headerTextContainer">{this.props.recipeName}</p>
