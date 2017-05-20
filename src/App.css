@@ -1,16 +1,89 @@
 
-.recipe {
-  height: 50px;
-  width: 50px;
-  background-color: red;
-  margin: 15px;
+/*.recipe {*/
+/*  height: 50px;*/
+/*  width: 50px;*/
+/*  background-color: red;*/
+/*  margin: 15px;*/
+/*}*/
+
+/*.recipeHeader {*/
+/*  background-color: green;*/
+/*}*/
+
+/*.ingredient {*/
+/*  background: red;*/
+/*  margin: 10px;*/
+/*}*/
+@import url('https://fonts.googleapis.com/css?family=Barrio');
+
+.appMainDiv {
+    max-width: 700px;
+    margin-right: auto;
+    margin-left: auto;
+    width: 500px;
+    background-color: #ffffff;
+    box-shadow: 0px 1px 10px gray;
+    padding: 25px;
+    position: relative;
+    border-radius: 0px 0px 15px 15px;
+}
+
+.appTitle {
+  text-align: center;
 }
 
 .recipeHeader {
-  background-color: green;
+    width: 100%;
+    height: 50px;
+    background-color: #50cea6;
+    box-shadow: 0px 1.5px 10px #dce2e0;
+    position: relative;
+    z-index: 2;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.headerTextContainer {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Barrio', cursive;
+  font-weight: bold;
+  font-size: 2rem;
+}
+
+.recipeWindow {
+    background-color: #f1fafa;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+.ingredientsContainer {
+    margin-bottom: 15px;
+    padding: 13px;
 }
 
 .ingredient {
-  background: red;
-  margin: 10px;
+    display: block;
+    margin: 2px 0;
+    border: 0.8px solid #5eebbe;
+    border-radius: 2px;
+    margin: 15px 0px;
+    padding: 5px;
+}
+
+.ingredientText {
+    letter-spacing: 1.5px;
+    height: 100%;
+}
+
+.addButtonContainer {
+  width: 100%;
+  text-align: center;
+}
+
+.button {
+  margin: 5px;
 }

@@ -65,11 +65,13 @@ var MainComponent = React.createClass({
 		});
 		
 		return (
-			<div>
-				<h1> Menu </h1>
+			<div className="appMainDiv">
+				<h1 className="appTitle"> Menu </h1>
 				<ul>{recipesArray}</ul>
-				<RecipeBodyButton  buttonStyle='warning' buttonTitle='Add recipe' onModalToggle={this.toggleAddModal} />
-				<RecipeAddModal show={this.state.showModal} onHide={this.toggleAddModal} />
+				<RecipeBodyButton  buttonStyle='success' buttonTitle='Add recipe' onModalToggle={this.toggleAddModal} />
+				<span className="addButtonContainer">
+					<RecipeAddModal show={this.state.showModal} onHide={this.toggleAddModal} />
+				</span>
 			</div>
 		);
 	}
@@ -122,7 +124,11 @@ var RecipeHeader = React.createClass({
 	},
 	
 	render: function() {
-		return <div className="recipeHeader" onClick={this.handleUserClick}>{this.props.recipeName}</div>;
+		return (
+			<div className="recipeHeader" onClick={this.handleUserClick}>
+				<p className="headerTextContainer">{this.props.recipeName}</p>
+			</div>
+		)
 	}
 });
 
@@ -165,10 +171,10 @@ var RecipeBody = React.createClass({
 	render: function() {
 		
 		return (
-			<div id={this.props.recipeId.toString()}>
+			<div className="recipeWindow" id={this.props.recipeId.toString()}>
 				<RecipeBodyList recipeIngredients={this.props.recipeIngredients}/>
-				<RecipeBodyButton buttonStyle="primary" buttonTitle="Edit" onModalToggle={this.toggleEditModal}/>
-				<RecipeBodyButton buttonStyle="primary" buttonTitle="Delete" onModalToggle={this.toggleDeleteModal}/>
+				<RecipeBodyButton buttonStyle="info" buttonTitle="Edit" onModalToggle={this.toggleEditModal}/>
+				<RecipeBodyButton buttonStyle="danger" buttonTitle="Delete" onModalToggle={this.toggleDeleteModal}/>
 				<RecipeEditModal show={this.state.showEditModal} onHide={this.toggleEditModal} recipeId={this.props.recipeId.toString()} recipeProperties={this.getRecipeProperties()}/>
 				<RecipeDeleteModal show={this.state.showDeleteModal} onHide={this.toggleDeleteModal} recipeId={this.props.recipeId.toString()} onDeleteRecipe={this.props.onDeleteRecipe} recipeName={this.props.recipeName}/>
 			</div>
@@ -187,7 +193,7 @@ var RecipeBodyList = React.createClass({
 			return <RecipeIngredient ingredient={ingredient}/>;
 		});
 		
-		return <div>{parsedIngredientsArray}</div>;
+		return <div className="ingredientsContainer">{parsedIngredientsArray}</div>;
 	}
 });
 
@@ -200,7 +206,7 @@ var RecipeBodyButton = React.createClass({
 	render: function() {
 		
 		if (this.props.buttonTitle == "Edit" || this.props.buttonTitle == "Add recipe" || this.props.buttonTitle == "Delete") {
-			return <Button dsStyle={this.props.buttonStyle} onClick={this.props.onModalToggle}>{this.props.buttonTitle}</Button>;
+			return <Button className="button" bsStyle={this.props.buttonStyle} onClick={this.props.onModalToggle}>{this.props.buttonTitle}</Button>;
 		}
 	}
 });
@@ -210,7 +216,7 @@ var RecipeIngredient = React.createClass({
 	ingredient: PropTypes.string,
 	
 	render: function() {
-		return <span className="ingredient">{this.props.ingredient}</span>; 
+		return <span className="ingredient"><p className="ingredientText">{this.props.ingredient}</p></span>; 
 	}
 });
 
