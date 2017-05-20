@@ -10,16 +10,13 @@ import PropTypes from 'prop-types';
 var MainComponent = React.createClass({
 	
 	componentWillMount: function() {
-		
+
 		var recipesDictValue =  {
 			'Pizza': ['Oregano', 'Cheese'],
 			'Donuts': ['Chocolate', 'Butter']
-		};
-		
-		if (reactLocalStorage.getObject('recipesDict') !== undefined) {
-			reactLocalStorage.setObject('recipesDict', recipesDictValue);
 		}
-
+	
+		reactLocalStorage.setObject('recipesDict', recipesDictValue);
 	},
 	
 	getInitialState: function() {
@@ -29,9 +26,12 @@ var MainComponent = React.createClass({
 		};	
 	},
 	
-	toggleModal: function() {
+	toggleAddModal: function(state) {
+		
+		this.updateLocalStorage(state);
+		
 		var newState = !this.state.showModal;
-		this.setState({showModal: newState});
+		this.setState({'recipesDict': reactLocalStorage.getObject('recipesDict'), 'showModal': newState});
 	},
 	
 	updateLocalStorage: function(state) {
@@ -40,26 +40,34 @@ var MainComponent = React.createClass({
 		reactLocalStorage.setObject('recipesDict', recipesDict);
 	},
 	
+	deleteRecipe: function(recipeName) {
+		var recipesDict = reactLocalStorage.getObject('recipesDict');
+		delete recipesDict[recipeName]
+		reactLocalStorage.setObject('recipesDict', recipesDict);
+		
+		this.setState({'recipesDict': reactLocalStorage.getObject('recipesDict'), 'showModal': this.state.showModal});
+	},
+	
 	render: function() {
 		
 		var recipesDict = this.state.recipesDict;
 		var recipeId = 0
 		var updateLocalStorage = this.updateLocalStorage;
+		var deleteRecipe = this.deleteRecipe;
 		
 		var recipesArray = Object.keys(recipesDict).map(function(recipe) {
 			recipeId += 1
-			return <RecipeContainer onUpdateLocalStorage={updateLocalStorage} recipeName={recipe} recipeIngredients={recipesDict[recipe]} recipeId={recipeId}/>
+			return <RecipeContainer onDeleteRecipe={deleteRecipe} onUpdateLocalStorage={updateLocalStorage} recipeName={recipe} recipeIngredients={recipesDict[recipe]} recipeId={recipeId}/>
 		});
 		
 		return (
 			<div>
 				<h1> Menu </h1>
 				<ul>{recipesArray}</ul>
-				<RecipeBodyButton  buttonStyle='warning' buttonTitle='Add recipe' onModalToggle={this.toggleModal} />
-				<RecipeAddModal show={this.state.showModal} onHide={this.toggleModal} />
+				<RecipeBodyButton  buttonStyle='warning' buttonTitle='Add recipe' onModalToggle={this.toggleAddModal} />
+				<RecipeAddModal show={this.state.showModal} onHide={this.toggleAddModal} />
 			</div>
-		)
-		
+		);
 	}
 });
 
@@ -68,6 +76,7 @@ var RecipeContainer = React.createClass({
 	recipeName: PropTypes.string,
 	recipeIngredients: PropTypes.array,
 	recipeId: PropTypes.number,
+	onDeleteRecipe: PropTypes.func,
 	
 	getInitialState: function() {
 		return {
@@ -88,7 +97,7 @@ var RecipeContainer = React.createClass({
 		return (
 			<div>
 				<RecipeHeader recipeName={this.state.recipeName} recipeId={this.props.recipeId}/>
-				<RecipeBody recipeName={this.state.recipeName} recipeIngredients={this.state.recipeIngredients} recipeId={this.props.recipeId} onUpdateContainer={this.updateContainer}/>
+				<RecipeBody recipeName={this.state.recipeName} recipeIngredients={this.state.recipeIngredients} recipeId={this.props.recipeId} onUpdateContainer={this.updateContainer} onDeleteRecipe={this.props.onDeleteRecipe}/>
 			</div>
 		);
 	}
@@ -100,10 +109,11 @@ var RecipeHeader = React.createClass({
 	recipeName: PropTypes.string,
 	onUpdateContainer: PropTypes.func,
 	
+	/*
+	 * SlideToggle the corresponding window with the same id as the header
+	 */
 	handleUserClick: function() {
-		
 		var id = '#' + this.props.recipeId.toString() + '';
-		
 		$(id).slideToggle(1000);
 	},
 	
@@ -117,7 +127,7 @@ var RecipeBody = React.createClass({
 	recipeName: PropTypes.string,
 	recipeIngredients: PropTypes.array,
 	recipeId: PropTypes.number,
-	// onUpdateContainer: PropTypes.func,
+	onDeleteRecipe: PropTypes.func,
 	
 	getInitialState: function() {
 		return {
@@ -133,14 +143,12 @@ var RecipeBody = React.createClass({
 	},
 	
 	updateContainer: function(state) {
-		
 		this.props.onUpdateContainer(state);
 	},
 	
 	toggleDeleteModal: function() {
 		var newState = !this.state.showDeleteModal;
 		this.setState({showDeleteModal: newState});
-		// this.props.onUpdateContainer(state);
 	},
 	
 	getRecipeProperties: function() {
@@ -158,7 +166,7 @@ var RecipeBody = React.createClass({
 				<RecipeBodyButton buttonStyle="primary" buttonTitle="Edit" onModalToggle={this.toggleEditModal}/>
 				<RecipeBodyButton buttonStyle="primary" buttonTitle="Delete" onModalToggle={this.toggleDeleteModal}/>
 				<RecipeEditModal show={this.state.showEditModal} onHide={this.toggleEditModal} recipeId={this.props.recipeId.toString()} recipeProperties={this.getRecipeProperties()}/>
-				<RecipeDeleteModal show={this.state.showDeleteModal} onHide={this.toggleDeleteModal} recipeId={this.props.recipeId.toString()} />
+				<RecipeDeleteModal show={this.state.showDeleteModal} onHide={this.toggleDeleteModal} recipeId={this.props.recipeId.toString()} onDeleteRecipe={this.props.onDeleteRecipe} recipeName={this.props.recipeName}/>
 			</div>
 		);
 		
@@ -198,7 +206,7 @@ var RecipeIngredient = React.createClass({
 	ingredient: PropTypes.string,
 	
 	render: function() {
-	 return <span className="ingredient">{this.props.ingredient}</span>; 
+		return <span className="ingredient">{this.props.ingredient}</span>; 
 	}
 });
 
@@ -210,17 +218,35 @@ var RecipeAddModal = React.createClass({
 	
 	show: PropTypes.bool,
 	onHide: PropTypes.func,
+	onUpdateLocalStorage: PropTypes.func,
 	
 	getInitialState: function() {
 		return {
-			'name': '',
-			'ingredients': ''
+			'recipeName': '',
+			'recipeIngredients': ''
 		};
 	},
 	
 	handleChange: function() {
 		
-		this.setState({'name': this.inputName.value, 'ingredients': this.inputIngredients.value});
+		this.setState({'recipeName': this.inputName.value, 'recipeIngredients': this.inputIngredients.value});
+	},
+	
+	handleSubmit: function() {
+		
+		var ingredientsArray = this.formatIngredients(this.state.recipeIngredients);
+		
+		var state = {
+			"recipeName": this.state.recipeName,
+			"recipeIngredients": ingredientsArray
+		}
+		
+		this.props.onHide(state);
+	},
+	
+	formatIngredients: function(ingredientsString) {
+		var array = ingredientsString.split(',');
+		return array;
 	},
 	
 	render: function() {
@@ -256,7 +282,7 @@ var RecipeAddModal = React.createClass({
 					</form>
 				</Modal.Body>
 				<Modal.Footer>
-					<Button onClick={this.props.onHide}>Close</Button>
+					<Button onClick={this.handleSubmit}>Add</Button>
 				</Modal.Footer>
 			</Modal>
 		);
@@ -284,7 +310,6 @@ var RecipeEditModal = React.createClass({
 	
 	handleSubmit: function() {
 		
-		//TODO: MAKE A DICT WITH AN INGREDIENTS ARRAY
 		if (this.state.recipeName != '' && this.state.recipeIngredients != '') {
 			
 			var ingredientsArray = this.formatIngredients(this.state.recipeIngredients);
@@ -355,19 +380,25 @@ var RecipeDeleteModal = React.createClass({
 	show: PropTypes.bool,
 	onHide: PropTypes.func,
 	recipeId: PropTypes.number,
+	recipeName: PropTypes.string,
+	onDeleteRecipe: PropTypes.func,
+	
+	handleDelete: function() {
+		this.props.onDeleteRecipe(this.props.recipeName);
+	},
 
 	render: function() {
 		return (
 			<Modal show={this.props.show} onHide={this.props.onHide}>
 				<Modal.Header closeButton>
-					<Modal.Title>Modal heading</Modal.Title>
+					<Modal.Title>Delete Recipe</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
-					<h4>Delete data</h4>
-					<p>Modal id {this.props.recipeId} </p>
+					<h4>Are you sure you want to delete this recipe?</h4>
+					<p>If not, check the x above. If yes, click on Delete </p>
 				</Modal.Body>
 				<Modal.Footer>
-					<Button onClick={this.props.onHide}>Close</Button>
+					<Button bsStyle="danger" onClick={this.handleDelete}>Close</Button>
 				</Modal.Footer>
 			</Modal>
 		);
