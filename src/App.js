@@ -34,14 +34,21 @@ var MainComponent = React.createClass({
 		this.setState({showModal: newState});
 	},
 	
+	updateLocalStorage: function(state) {
+		var recipesDict = reactLocalStorage.getObject('recipesDict');
+		recipesDict[state.recipeName] = state.recipeIngredients;
+		reactLocalStorage.setObject('recipesDict', recipesDict);
+	},
+	
 	render: function() {
 		
 		var recipesDict = this.state.recipesDict;
 		var recipeId = 0
+		var updateLocalStorage = this.updateLocalStorage;
 		
 		var recipesArray = Object.keys(recipesDict).map(function(recipe) {
 			recipeId += 1
-			return <RecipeContainer recipeName={recipe} recipeIngredients={recipesDict[recipe]} recipeId={recipeId}/>
+			return <RecipeContainer onUpdateLocalStorage={updateLocalStorage} recipeName={recipe} recipeIngredients={recipesDict[recipe]} recipeId={recipeId}/>
 		});
 		
 		return (
@@ -73,7 +80,7 @@ var RecipeContainer = React.createClass({
 		/*
 		 * state is a dictionary
 		 */
-		console.log(state);
+		this.props.onUpdateLocalStorage(state);
 		this.setState(state);	
 	},
 	
@@ -126,6 +133,7 @@ var RecipeBody = React.createClass({
 	},
 	
 	updateContainer: function(state) {
+		
 		this.props.onUpdateContainer(state);
 	},
 	
@@ -267,7 +275,7 @@ var RecipeEditModal = React.createClass({
 		return {
 			'recipeName': this.props.recipeProperties.name,
 			'recipeIngredients': this.props.recipeProperties.ingredients
-		}
+		};
 	},
 	
 	handleChange: function() {
@@ -288,7 +296,7 @@ var RecipeEditModal = React.createClass({
 		
 			this.props.onHide(state);
 		} else {
-			alert("You can't set an empty recipe")
+			alert("You can't set an empty recipe");
 		}
 		
 	},
