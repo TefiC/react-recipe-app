@@ -44,7 +44,7 @@ var MainComponent = React.createClass({
 	},
 	
 	deleteRecipe: function(recipeName) {
-		alert('deleting');
+		
 		var recipesDict = reactLocalStorage.getObject('recipesDict');
 		delete recipesDict[recipeName]
 		reactLocalStorage.setObject('recipesDict', recipesDict);
