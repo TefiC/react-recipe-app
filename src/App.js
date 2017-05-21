@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
-import './App.css';
 import $ from 'jquery';
 import 'bootstrap/dist/css/bootstrap.css';
 import {reactLocalStorage} from 'reactjs-localstorage';
 import { Modal, Button, FormControl, FormGroup, ControlLabel } from 'react-bootstrap/lib';
 import PropTypes from 'prop-types';
+import './App.css';
 
 var MainComponent = React.createClass({
 	
@@ -114,8 +114,8 @@ var RecipeContainer = React.createClass({
 		 * state is a dictionary
 		 */
 		 
-		// console.log('!!! --- State received')
-		// console.log(state)
+		console.log('!!! --- State received')
+		console.log(state)
 		
 		this.props.onUpdateLocalStorage(state);
 		this.setState(state);	
@@ -173,6 +173,9 @@ var RecipeBody = React.createClass({
 	},
 	
 	toggleEditModal: function(state) {
+		
+		console.log('--- Toggle received by edit')
+		console.log(state)
 		
 		var newState = !this.state.showEditModal;
 		this.updateContainer(state);
@@ -341,9 +344,13 @@ var RecipeEditModal = React.createClass({
 	
 	getInitialState: function() {
 		return {
-			'recipeName': this.props.recipeProperties.name,
-			'recipeIngredients': this.props.recipeProperties.ingredients
+			'recipeName': '',
+			'recipeIngredients': ''
 		};
+	},
+	
+	componentWillReceiveProps: function(props) {
+		this.setState({'recipeName': props.recipeProperties.name, 'recipeIngredients': props.recipeProperties.ingredients})
 	},
 	
 	handleChange: function() {
