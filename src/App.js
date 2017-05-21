@@ -59,9 +59,9 @@ var MainComponent = React.createClass({
 		
 		var recipesDict = this.state.recipesDict;
 		
-		console.log('--------------------------- STARTING AGAIN')
-		console.log('---->Inside MainComponent render');
-		console.log(recipesDict);
+		// console.log('--------------------------- STARTING AGAIN')
+		// console.log('---->Inside MainComponent render');
+		// console.log(recipesDict);
 		
 		var recipeId = 0
 		var updateLocalStorage = this.updateLocalStorage;
@@ -99,25 +99,37 @@ var RecipeContainer = React.createClass({
 		}	
 	},
 	
+	componentWillReceiveProps: function(props) {
+	
+		var data = {
+			'recipeName': props.recipeName,
+			'recipeIngredients': props.recipeIngredients
+		}
+		
+		this.setState(data)
+	},
+	
 	updateContainer: function(state) {
 		/*
 		 * state is a dictionary
 		 */
-		console.log('!!! --- State received')
-		console.log(state)
+		 
+		// console.log('!!! --- State received')
+		// console.log(state)
+		
 		this.props.onUpdateLocalStorage(state);
 		this.setState(state);	
 	},
-	
+
 	render: function() {
 		
-		console.log('----> RecipeContainer')
-		console.log(this.props.recipeName);
+		// console.log('----> RecipeContainer')
+		// console.log(this.props.recipeName);
 		
 		return (
 			<div>
-				<RecipeHeader recipeName={this.props.recipeName} recipeId={this.props.recipeId}/>
-				<RecipeBody recipeName={this.props.recipeName} recipeIngredients={this.props.recipeIngredients} recipeId={this.props.recipeId} onUpdateContainer={this.updateContainer} onDeleteRecipe={this.props.onDeleteRecipe}/>
+				<RecipeHeader recipeName={this.state.recipeName} recipeId={this.props.recipeId}/>
+				<RecipeBody recipeName={this.state.recipeName} recipeIngredients={this.state.recipeIngredients} recipeId={this.props.recipeId} onUpdateContainer={this.updateContainer} onDeleteRecipe={this.props.onDeleteRecipe}/>
 			</div>
 		);
 	}
@@ -185,8 +197,8 @@ var RecipeBody = React.createClass({
 	
 	render: function() {
 		
-		console.log('----> Recipe body')
-		console.log(this.getRecipeProperties());
+		// console.log('----> Recipe body')
+		// console.log(this.getRecipeProperties());
 		
 		return (
 			<div className="recipeWindow" id={this.props.recipeId.toString()}>
@@ -358,8 +370,6 @@ var RecipeEditModal = React.createClass({
 	
 	handleClose: function(e) {
 		
-		e.persist();
-		
 		this.props.onHide(this.getInitialState());	
 	},
 	
@@ -370,11 +380,11 @@ var RecipeEditModal = React.createClass({
 	
 	render: function() {
 		
-		console.log(' ---->Inside modal')
-		console.log(' -->Name')
-		console.log(this.props.recipeProperties.name)
-		console.log('--> Ingredients')
-		console.log(this.props.recipeProperties.ingredients)
+		// console.log(' ---->Inside modal')
+		// console.log(' -->Name')
+		// console.log(this.props.recipeProperties.name)
+		// console.log('--> Ingredients')
+		// console.log(this.props.recipeProperties.ingredients)
 		
 		return (
 			<Modal show={this.props.show} onHide={this.handleClose}>
@@ -424,7 +434,9 @@ var RecipeDeleteModal = React.createClass({
 	onDeleteRecipe: PropTypes.func,
 	
 	handleDelete: function(e) {
-		console.log('DELETING ----------------------------')
+		
+		// console.log('DELETING ----------------------------')
+		
 		this.props.onDeleteRecipe(this.props.recipeName);
 		this.props.onHide();
 	},
