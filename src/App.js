@@ -202,6 +202,8 @@ var RecipeBody = React.createClass({
 		
 		return (
 			<div className="recipeWindow" id={this.props.recipeId.toString()}>
+				<h2 className="ingredientsTitle">..Ingredients..</h2>
+				<hr/>
 				<RecipeBodyList recipeIngredients={this.props.recipeIngredients}/>
 				<RecipeBodyButton buttonStyle="info" buttonTitle="Edit" onModalToggle={this.toggleEditModal}/>
 				<RecipeBodyButton buttonStyle="danger" buttonTitle="Delete" onModalToggle={this.toggleDeleteModal}/>
