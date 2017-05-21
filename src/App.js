@@ -172,13 +172,21 @@ var RecipeBody = React.createClass({
 		};	
 	},
 	
-	toggleEditModal: function(state) {
+	toggleEditModal: function(statePassed) {
 		
-		console.log('--- Toggle received by edit')
-		console.log(state)
+		/*
+		 * statePassed is an object. Empty if the user clicked on the x button, 
+		 * or containing recipeName and recipeIngredients if the user clicked on the change button
+		 */
+		
+		// console.log('--- Toggle received by edit')
+		// console.log(state)
+		
+		if ( statePassed != {} ) {
+			this.updateContainer(statePassed);
+		}
 		
 		var newState = !this.state.showEditModal;
-		this.updateContainer(state);
 		this.setState({showEditModal: newState});
 	},
 	
@@ -219,6 +227,8 @@ var RecipeBody = React.createClass({
 });
 
 var RecipeBodyList = React.createClass({
+	
+	recipeIngredients: PropTypes.array,
 	
 	render: function() {
 		
@@ -386,8 +396,8 @@ var RecipeEditModal = React.createClass({
 	},
 	
 	handleClose: function(e) {
-		
-		this.props.onHide(this.getInitialState());	
+	
+		this.props.onHide({});	
 	},
 	
 	formatIngredients: function(ingredientsString) {
