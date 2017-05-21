@@ -19,12 +19,12 @@
 
 html, body {
     height: 100%;
-    background-color: #e7d6d6;
+    background-color: #ccede2;
 }
 
 #root {
     height: 100vh;
-    background-color: #e7d6d6;
+    background-color: #ccede2;
 }
 
 
@@ -80,6 +80,10 @@ html, body {
     display: None;
 }
 
+#1 {
+    display: inline;
+}
+
 .ingredientsTitle {
     font-family: 'Merriweather', serif;
     font-size: 1.5rem;
@@ -106,6 +110,10 @@ html, body {
 .ingredientText {
     letter-spacing: 1.5px;
     height: 100%;
+    font-size: 1.5rem;
+    margin: 0;
+    padding: 6px;
+    
 }
 
 hr {
