@@ -16,15 +16,17 @@ var MainComponent = React.createClass({
 			'Donuts': ['Chocolate', 'Butter']
 		}
 		
-		if (reactLocalStorage.getObject('recipesDict') === {}) {
+		if (Object.keys(reactLocalStorage.getObject('recipesDict')).length == 0) {
 			reactLocalStorage.setObject('recipesDict', recipesDictValue);
 		}
+		
+		this.setState({'recipesDict': reactLocalStorage.getObject('recipesDict'), 'showModal': false})
 		
 	},
 	
 	getInitialState: function() {
 		return {
-			'recipesDict': reactLocalStorage.getObject('recipesDict'),
+			'recipesDict': {},
 			'showModal': false
 		};	
 	},
@@ -57,7 +59,7 @@ var MainComponent = React.createClass({
 		
 		var recipesDict = this.state.recipesDict;
 		
-		console.log('Inside render');
+		console.log('Inside MainComponent render');
 		console.log(recipesDict);
 		
 		var recipeId = 0
@@ -105,6 +107,10 @@ var RecipeContainer = React.createClass({
 	},
 	
 	render: function() {
+		
+		console.log('RecipeContainer')
+		console.log(this.props.recipeName);
+		
 		return (
 			<div>
 				<RecipeHeader recipeName={this.props.recipeName} recipeId={this.props.recipeId}/>
@@ -174,6 +180,9 @@ var RecipeBody = React.createClass({
 	},
 	
 	render: function() {
+		
+		console.log('Recipe body')
+		console.log(this.getRecipeProperties());
 		
 		return (
 			<div className="recipeWindow" id={this.props.recipeId.toString()}>
@@ -351,6 +360,13 @@ var RecipeEditModal = React.createClass({
 	},
 	
 	render: function() {
+		
+		console.log('Inside modal')
+		console.log('Name')
+		console.log(this.props.recipeProperties.name)
+		console.log('Ingredients')
+		console.log(this.props.recipeProperties.ingredients)
+		
 		return (
 			<Modal show={this.props.show} onHide={this.handleClose}>
 				<Modal.Header closeButton>
