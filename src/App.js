@@ -445,7 +445,7 @@ var RecipeEditModal = React.createClass({
 					</form>
 				</Modal.Body>
 				<Modal.Footer>
-					<Button onClick={this.handleSubmit}>Change</Button>
+					<Button bsStyle="warning" onClick={this.handleSubmit}>Change</Button>
 				</Modal.Footer>
 			</Modal>
 		);
@@ -476,10 +476,11 @@ var RecipeDeleteModal = React.createClass({
 				</Modal.Header>
 				<Modal.Body>
 					<h4>Are you sure you want to delete this recipe?</h4>
+					<hr/>
 					<p>If not, check the x above. If yes, click on Delete </p>
 				</Modal.Body>
 				<Modal.Footer>
-					<Button bsStyle="danger" onClick={this.handleDelete}>Close</Button>
+					<Button bsStyle="danger" onClick={this.handleDelete}>Delete</Button>
 				</Modal.Footer>
 			</Modal>
 		);
