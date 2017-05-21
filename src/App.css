@@ -98,6 +98,10 @@ html, body {
     padding: 13px;
 }
 
+.ingredientsListContainer {
+    padding: 0;
+}
+
 .ingredient {
     display: block;
     margin: 2px 0;

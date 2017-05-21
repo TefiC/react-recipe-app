@@ -75,7 +75,7 @@ var MainComponent = React.createClass({
 		return (
 			<div className="appMainDiv">
 				<h1 className="appTitle"> My Recipes </h1>
-				<ul>{recipesArray}</ul>
+				<ul className="ingredientsListContainer">{recipesArray}</ul>
 				<RecipeBodyButton  buttonStyle='success' buttonTitle='Add recipe' onModalToggle={this.toggleAddModal} />
 				<span className="addButtonContainer">
 					<RecipeAddModal show={this.state.showModal} onHide={this.toggleAddModal} />
