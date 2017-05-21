@@ -80,8 +80,8 @@ html, body {
     display: None;
 }
 
-#1 {
-    display: inline;
+#window1 {
+    display: block;
 }
 
 .ingredientsTitle {

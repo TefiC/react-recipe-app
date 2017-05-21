@@ -145,7 +145,7 @@ var RecipeHeader = React.createClass({
 	 * SlideToggle the corresponding window with the same id as the header
 	 */
 	handleUserClick: function() {
-		var id = '#' + this.props.recipeId.toString() + '';
+		var id = '#window' + this.props.recipeId.toString() + '';
 		$(id).slideToggle(700);
 	},
 	
@@ -212,7 +212,7 @@ var RecipeBody = React.createClass({
 		// console.log(this.getRecipeProperties());
 		
 		return (
-			<div className="recipeWindow" id={this.props.recipeId.toString()}>
+			<div className="recipeWindow" id={"window" + this.props.recipeId.toString()}>
 				<h2 className="ingredientsTitle">..Ingredients..</h2>
 				<hr/>
 				<RecipeBodyList recipeIngredients={this.props.recipeIngredients}/>
