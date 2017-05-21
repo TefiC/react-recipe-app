@@ -127,7 +127,7 @@ var RecipeContainer = React.createClass({
 		// console.log(this.props.recipeName);
 		
 		return (
-			<div>
+			<div className="recipeContainer">
 				<RecipeHeader recipeName={this.state.recipeName} recipeId={this.props.recipeId}/>
 				<RecipeBody recipeName={this.state.recipeName} recipeIngredients={this.state.recipeIngredients} recipeId={this.props.recipeId} onUpdateContainer={this.updateContainer} onDeleteRecipe={this.props.onDeleteRecipe}/>
 			</div>
@@ -146,7 +146,7 @@ var RecipeHeader = React.createClass({
 	 */
 	handleUserClick: function() {
 		var id = '#' + this.props.recipeId.toString() + '';
-		$(id).slideToggle(1000);
+		$(id).slideToggle(700);
 	},
 	
 	render: function() {
@@ -348,11 +348,19 @@ var RecipeEditModal = React.createClass({
 		this.setState({'recipeName': this.inputName.value, 'recipeIngredients': this.inputIngredients.value});	
 	},
 	
+	deletePreviousVersion: function(previousName) {
+		var recipesDict = reactLocalStorage.getObject('recipesDict');
+		delete recipesDict[previousName]
+		reactLocalStorage.setObject('recipesDict', recipesDict);
+	},
+	
 	handleSubmit: function(e) {
 		
 		e.persist();
 		
 		if (this.state.recipeName != '' && this.state.recipeIngredients != '') {
+			
+			this.deletePreviousVersion(this.props.recipeProperties.name);
 			
 			var ingredientsArray = this.formatIngredients(this.state.recipeIngredients);
 			
