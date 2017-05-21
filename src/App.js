@@ -59,7 +59,8 @@ var MainComponent = React.createClass({
 		
 		var recipesDict = this.state.recipesDict;
 		
-		console.log('Inside MainComponent render');
+		console.log('--------------------------- STARTING AGAIN')
+		console.log('---->Inside MainComponent render');
 		console.log(recipesDict);
 		
 		var recipeId = 0
@@ -102,13 +103,15 @@ var RecipeContainer = React.createClass({
 		/*
 		 * state is a dictionary
 		 */
+		console.log('!!! --- State received')
+		console.log(state)
 		this.props.onUpdateLocalStorage(state);
 		this.setState(state);	
 	},
 	
 	render: function() {
 		
-		console.log('RecipeContainer')
+		console.log('----> RecipeContainer')
 		console.log(this.props.recipeName);
 		
 		return (
@@ -158,6 +161,7 @@ var RecipeBody = React.createClass({
 	},
 	
 	toggleEditModal: function(state) {
+		
 		var newState = !this.state.showEditModal;
 		this.updateContainer(state);
 		this.setState({showEditModal: newState});
@@ -181,7 +185,7 @@ var RecipeBody = React.createClass({
 	
 	render: function() {
 		
-		console.log('Recipe body')
+		console.log('----> Recipe body')
 		console.log(this.getRecipeProperties());
 		
 		return (
@@ -332,7 +336,9 @@ var RecipeEditModal = React.createClass({
 		this.setState({'recipeName': this.inputName.value, 'recipeIngredients': this.inputIngredients.value});	
 	},
 	
-	handleSubmit: function() {
+	handleSubmit: function(e) {
+		
+		e.persist();
 		
 		if (this.state.recipeName != '' && this.state.recipeIngredients != '') {
 			
@@ -342,7 +348,7 @@ var RecipeEditModal = React.createClass({
 				'recipeName': this.state.recipeName,
 				'recipeIngredients': ingredientsArray
 			}
-		
+			
 			this.props.onHide(state);
 		} else {
 			alert("You can't set an empty recipe");
@@ -350,7 +356,10 @@ var RecipeEditModal = React.createClass({
 		
 	},
 	
-	handleClose: function() {
+	handleClose: function(e) {
+		
+		e.persist();
+		
 		this.props.onHide(this.getInitialState());	
 	},
 	
@@ -361,10 +370,10 @@ var RecipeEditModal = React.createClass({
 	
 	render: function() {
 		
-		console.log('Inside modal')
-		console.log('Name')
+		console.log(' ---->Inside modal')
+		console.log(' -->Name')
 		console.log(this.props.recipeProperties.name)
-		console.log('Ingredients')
+		console.log('--> Ingredients')
 		console.log(this.props.recipeProperties.ingredients)
 		
 		return (
@@ -414,7 +423,8 @@ var RecipeDeleteModal = React.createClass({
 	recipeName: PropTypes.string,
 	onDeleteRecipe: PropTypes.func,
 	
-	handleDelete: function() {
+	handleDelete: function(e) {
+		console.log('DELETING ----------------------------')
 		this.props.onDeleteRecipe(this.props.recipeName);
 		this.props.onHide();
 	},

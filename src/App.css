@@ -16,6 +16,17 @@
 /*}*/
 @import url('https://fonts.googleapis.com/css?family=Barrio|Pacifico');
 
+
+html, body {
+    height: 100%;
+    background-color: #e7d6d6;
+}
+
+#root {
+    background-color: #e7d6d6;
+}
+
+
 .appMainDiv {
     max-width: 1000px;
     margin-right: auto;
