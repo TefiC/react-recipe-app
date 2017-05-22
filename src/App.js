@@ -199,9 +199,9 @@ var AppJumbotron = React.createClass({
 		return (
 			<div className="jumbotronContainer">
 				<h3 className="jumbotronText">Your Best Friend <br /> In The Kitchen!</h3>
-				<AppImage class="jumbotronImage secondaryImage" src='./steak.jpg'/>
-				<AppImage class="jumbotronImage mainImage" src="./dessert.jpg"/>
-				<AppImage class="jumbotronImage secondaryImage" src="./shrimp.jpg"/>
+				<AppImage class="jumbotronImage secondaryImage" src='./steak-min.jpg'/>
+				<AppImage class="jumbotronImage mainImage" src="./dessert-min.jpg"/>
+				<AppImage class="jumbotronImage secondaryImage" src="./shrimp-min.jpg"/>
 			</div>
 		)
 	}	
