@@ -24,13 +24,13 @@
 
 html, body {
     height: 100%;
-    background-color: #edfafa;
+    background-color: rgb(109, 158, 109);
     overflow-x: hidden;
 }
 
 #root {
     height: 100vh;
-    background-color: #edfafa;
+    background-color: rgb(109, 158, 109);
     margin-bottom: 25px;
 }
 
@@ -97,9 +97,14 @@ html, body {
 
 /*SEARCH*/
 .searchBarContainer {
-    background-color: #e2e5e4;
+    background: -webkit-linear-gradient(#1c861c, #5cb85c);
+    background: -o-linear-gradient(#1c861c, #5cb85c); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#1c861c, #5cb85c); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#1c861c, #5cb85c); /* Standard syntax */
+    padding-top: 10px;
     text-align: center;
     justify-content: center;
+    display: hidden;
 }
 
 /*JUMBOTRON*/
@@ -111,6 +116,7 @@ html, body {
     position: relative;
     z-index: 4;
     border-bottom: 2px solid rgba(0, 0, 0, 0.25);
+    border-top: 15px solid #5cb85c;
 }
 
 .jumbotronImage {
@@ -169,6 +175,25 @@ html, body {
     height: 40px;
     width: 100%;
     max-width: 90px;
+}
+
+.btn-link {
+    color: white;
+    font-size: 1.9rem;
+    letter-spacing: 2.5px;
+    font-family: 'Shadows Into Light Two', cursive;
+}
+
+.btn-link:active,
+.btn-link:focus,
+.btn-link:hover {
+    color: white;
+    text-decoration: none;
+}
+
+.btn-link:hover {
+    font-size: 1.9rem;
+    font-weight: bold;
 }
 
 .recipeHeader {

@@ -83,7 +83,7 @@ var MainComponent = React.createClass({
 				<div className="appMainDiv">
 					<div className="addButtonTitleContainer">
 						
-						<h1 className="appTitle"> My Recipes </h1>
+						<h1 className="appTitle"> Your Recipes </h1>
 					
 						<div className="addButtonContainer">
 							<RecipeBodyButton  buttonStyle='success' buttonTitle='Add recipe' onModalToggle={this.toggleAddModal} />
@@ -179,7 +179,6 @@ var SearchBar = React.createClass({
 	
 	render: function() {
 		
-		console.log(this.state.show);
 		return (
 			<div className="searchBarContainer" style={{display: this.state.show}}>
 				<Button bsStyle="link">About</Button>
