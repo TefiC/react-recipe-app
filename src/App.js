@@ -27,7 +27,8 @@ var MainComponent = React.createClass({
 	getInitialState: function() {
 		return {
 			'recipesDict': {},
-			'showModal': false
+			'showModal': false,
+			// 'showNavbar': false
 		};	
 	},
 	
@@ -52,7 +53,7 @@ var MainComponent = React.createClass({
 		
 		reactLocalStorage.setObject('recipesDict', recipesDict);
 		
-		this.setState({'recipesDict': reactLocalStorage.getObject('recipesDict'), 'showModal': this.state.showModal});
+		this.setState({'recipesDict': reactLocalStorage.getObject('recipesDict')});
 	},
 	
 	render: function() {
@@ -75,14 +76,23 @@ var MainComponent = React.createClass({
 		return (
 			<div>
 				<AppHeader />
+				<SearchBar />
 				<AppJumbotron />
 				<div className="appMainDiv">
-					<h1 className="appTitle"> My Recipes </h1>
+					<div className="addButtonTitleContainer">
+						
+						<h1 className="appTitle"> My Recipes </h1>
+					
+						<div className="addButtonContainer">
+							<RecipeBodyButton  buttonStyle='success' buttonTitle='Add recipe' onModalToggle={this.toggleAddModal} />
+						</div>
+						
+					</div>
 					<ul className="ingredientsListContainer">{recipesArray}</ul>
-					<RecipeBodyButton  buttonStyle='success' buttonTitle='Add recipe' onModalToggle={this.toggleAddModal} />
-					<span className="addButtonContainer">
-						<RecipeAddModal show={this.state.showModal} onHide={this.toggleAddModal} />
-					</span>
+					
+					<RecipeAddModal show={this.state.showModal} onHide={this.toggleAddModal} />
+					
+					
 				</div>
 			</div>
 		);
@@ -131,8 +141,25 @@ var AppHeaderBurgerIcon = React.createClass({
 	render: function() {
 		return (
 			<div className="burgerLogoContainer">
-				<AppImage class="burgerIcon" src="https://cdn.pixabay.com/photo/2016/03/31/15/16/computer-1293125_960_720.png" />
+				<AppImage class="burgerIcon" src="./burger-menu-icon.png" />
 			</div>
+		)
+	}	
+});
+
+// -------------------------------------------------
+// SEARCH BAR
+// -------------------------------------------------
+
+var SearchBar = React.createClass({
+	render: function() {
+		return (
+			<div className="searchBarContainer">
+				<Button bsStyle="link">About</Button>
+				<Button bsStyle="link">Find</Button>
+				<Button bsStyle="link">Contact</Button>
+			</div>
+			
 		)
 	}	
 });
@@ -145,9 +172,10 @@ var AppJumbotron = React.createClass({
 	render: function() {
 		return (
 			<div className="jumbotronContainer">
-				<AppImage class="jumbotronImage" src="https://cdn.pixabay.com/photo/2017/03/23/19/57/asparagus-2169305_960_720.jpg"/>
-				<AppImage class="jumbotronImage mainImage" src="https://cdn.pixabay.com/photo/2017/01/19/05/14/korean-cuisine-1991580_960_720.jpg"/>
-				<AppImage class="jumbotronImage" src="https://cdn.pixabay.com/photo/2015/02/06/13/50/eszterhazyschnitte-626109_960_720.jpg"/>
+				<h3 className="jumbotronText">Your Best Friend <br /> In The Kitchen!</h3>
+				<AppImage class="jumbotronImage" src='./steak.jpg'/>
+				<AppImage class="jumbotronImage mainImage" src="./dessert.jpg"/>
+				<AppImage class="jumbotronImage" src="./shrimp.jpg"/>
 			</div>
 		)
 	}	
