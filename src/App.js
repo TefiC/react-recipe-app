@@ -94,8 +94,10 @@ var MainComponent = React.createClass({
 					
 					<RecipeAddModal show={this.state.showModal} onHide={this.toggleAddModal} />
 					
-					
 				</div>
+				
+				<div className="footerMainContainer"></div>
+				
 			</div>
 		);
 	}

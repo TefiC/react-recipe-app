@@ -267,6 +267,15 @@ hr {
   margin: 5px;
 }
 
+
+/*FOOTER*/
+
+.footerMainContainer {
+    height: 20px;
+    background-color: white;
+    box-shadow: -3px -1px 20px #403112;
+}
+
 @media screen and (max-width: 550px) {
     .secondaryImage {
         display: hidden;
