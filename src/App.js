@@ -20,7 +20,7 @@ var MainComponent = React.createClass({
 			reactLocalStorage.setObject('recipesDict', recipesDictValue);
 		}
 		
-		this.setState({'recipesDict': reactLocalStorage.getObject('recipesDict'), 'showModal': false})
+		this.setState({'recipesDict': reactLocalStorage.getObject('recipesDict'), 'showModal': false, 'showNavbar': false})
 		
 	},
 	
@@ -28,7 +28,7 @@ var MainComponent = React.createClass({
 		return {
 			'recipesDict': {},
 			'showModal': false,
-			// 'showNavbar': false
+			'showNavbar': false
 		};	
 	},
 	
@@ -37,7 +37,13 @@ var MainComponent = React.createClass({
 		this.updateLocalStorage(state);
 		
 		var newState = !this.state.showModal;
-		this.setState({'recipesDict': reactLocalStorage.getObject('recipesDict'), 'showModal': newState});
+		this.setState({'recipesDict': reactLocalStorage.getObject('recipesDict'), 'showModal': newState, 'showNavbar': false});
+	},
+	
+	toggleNavbar: function() {
+		var newState = !this.state.showNavbar;	
+		this.setState({'recipesDict': reactLocalStorage.getObject('recipesDict'), 'showModal': this.state.showModal, 'showNavbar': newState});
+		
 	},
 	
 	updateLocalStorage: function(state) {
@@ -53,16 +59,12 @@ var MainComponent = React.createClass({
 		
 		reactLocalStorage.setObject('recipesDict', recipesDict);
 		
-		this.setState({'recipesDict': reactLocalStorage.getObject('recipesDict')});
+		this.setState({'recipesDict': reactLocalStorage.getObject('recipesDict'), 'showModal': false, 'showNavbar': false});
 	},
 	
 	render: function() {
 		
 		var recipesDict = this.state.recipesDict;
-		
-		// console.log('--------------------------- STARTING AGAIN')
-		// console.log('---->Inside MainComponent render');
-		// console.log(recipesDict);
 		
 		var recipeId = 0
 		var updateLocalStorage = this.updateLocalStorage;
@@ -75,8 +77,8 @@ var MainComponent = React.createClass({
 		
 		return (
 			<div>
-				<AppHeader />
-				<SearchBar />
+				<AppHeader onBurgerIconClick={this.toggleNavbar}/>
+				<SearchBar show={this.state.showNavbar}/>
 				<AppJumbotron />
 				<div className="appMainDiv">
 					<div className="addButtonTitleContainer">
@@ -117,11 +119,14 @@ var AppImage = React.createClass({
 // -------------------------------------------------
 
 var AppHeader = React.createClass({
+	
+	onBurgerIconClick: PropTypes.func,
+	
 	render: function() {
 		return (
 			<header className="appHeader">
 				<AppHeaderTitle />
-				<AppHeaderBurgerIcon />
+				<AppHeaderBurgerIcon onBurgerIconClick={this.props.onBurgerIconClick}/>
 			</header>
 		)
 	}	
@@ -138,9 +143,12 @@ var AppHeaderTitle = React.createClass({
 });
 
 var AppHeaderBurgerIcon = React.createClass({
+	
+	onBurgerIconClick: PropTypes.func,
+	
 	render: function() {
 		return (
-			<div className="burgerLogoContainer">
+			<div className="burgerLogoContainer" onClick={this.props.onBurgerIconClick}>
 				<AppImage class="burgerIcon" src="./burger-menu-icon.png" />
 			</div>
 		)
@@ -152,9 +160,28 @@ var AppHeaderBurgerIcon = React.createClass({
 // -------------------------------------------------
 
 var SearchBar = React.createClass({
+	
+	show: PropTypes.bool,
+	
+	getInitialState: function() {
+		return {
+			'show': false
+		}
+	},
+	
+	componentWillReceiveProps: function(props) {
+		if (props.show == true) {
+			this.setState({'show': 'flex'});
+		} else {
+			this.setState({'show': 'None'});
+		}
+	},
+	
 	render: function() {
+		
+		console.log(this.state.show);
 		return (
-			<div className="searchBarContainer">
+			<div className="searchBarContainer" style={{display: this.state.show}}>
 				<Button bsStyle="link">About</Button>
 				<Button bsStyle="link">Find</Button>
 				<Button bsStyle="link">Contact</Button>
@@ -173,9 +200,9 @@ var AppJumbotron = React.createClass({
 		return (
 			<div className="jumbotronContainer">
 				<h3 className="jumbotronText">Your Best Friend <br /> In The Kitchen!</h3>
-				<AppImage class="jumbotronImage" src='./steak.jpg'/>
+				<AppImage class="jumbotronImage secondaryImage" src='./steak.jpg'/>
 				<AppImage class="jumbotronImage mainImage" src="./dessert.jpg"/>
-				<AppImage class="jumbotronImage" src="./shrimp.jpg"/>
+				<AppImage class="jumbotronImage secondaryImage" src="./shrimp.jpg"/>
 			</div>
 		)
 	}	
