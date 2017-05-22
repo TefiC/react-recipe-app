@@ -19,12 +19,12 @@
 
 html, body {
     height: 100%;
-    background-color: #ccede2;
+    background-color: #edfafa;
 }
 
 #root {
     height: 100vh;
-    background-color: #ccede2;
+    background-color: #edfafa;
     margin-bottom: 25px;
 }
 

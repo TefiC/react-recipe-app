@@ -131,7 +131,7 @@ var AppHeaderTitle = React.createClass({
 	render: function() {
 		return (
 			<div className="headerTitleContainer">
-				<img className="titleTextImg" src="http://de11.engine.flamingtext.com/netfu/tmp28006/coollogo_com-2501272.png"/>
+				<img className="titleTextImg" src="./appName.png"/>
 			</div>
 		)
 	}	
