@@ -84,10 +84,12 @@ var MainComponent = React.createClass({
 					<div className="addButtonTitleContainer">
 						
 						<h1 className="appTitle"> Your Recipes </h1>
-					
+						
 						<div className="addButtonContainer">
 							<RecipeBodyButton  buttonStyle='success' buttonTitle='Add recipe' onModalToggle={this.toggleAddModal} />
 						</div>
+						
+						<hr/>
 						
 					</div>
 					<ul className="ingredientsListContainer">{recipesArray}</ul>
@@ -275,7 +277,9 @@ var RecipeHeader = React.createClass({
 	/*
 	 * SlideToggle the corresponding window with the same id as the header
 	 */
-	handleUserClick: function() {
+	handleUserClick: function(e) {
+		console.log(e);
+		// $(e.target).css("width", 50%);
 		var id = '#window' + this.props.recipeId.toString() + '';
 		$(id).slideToggle(700);
 	},
