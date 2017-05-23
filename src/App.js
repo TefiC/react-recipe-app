@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import $ from 'jquery';
+import MediaQuery from 'react-responsive';
 import 'bootstrap/dist/css/bootstrap.css';
 import {reactLocalStorage} from 'reactjs-localstorage';
 import { Modal, Button, FormControl, FormGroup, ControlLabel } from 'react-bootstrap/lib';
@@ -72,7 +73,10 @@ var MainComponent = React.createClass({
 		
 		var recipesArray = Object.keys(recipesDict).map(function(recipe) {
 			recipeId += 1
-			return <RecipeContainer onDeleteRecipe={deleteRecipe} onUpdateLocalStorage={updateLocalStorage} recipeName={recipe} recipeIngredients={recipesDict[recipe]} recipeId={recipeId}/>
+			
+			return 	(
+				<RecipeContainer onDeleteRecipe={deleteRecipe} onUpdateLocalStorage={updateLocalStorage} recipeName={recipe} recipeIngredients={recipesDict[recipe]} recipeId={recipeId}/>
+			)
 		});
 		
 		return (
@@ -81,17 +85,7 @@ var MainComponent = React.createClass({
 				<SearchBar show={this.state.showNavbar}/>
 				<AppJumbotron />
 				<div className="appMainDiv">
-					<div className="addButtonTitleContainer">
-						
-						<h1 className="appTitle"> Your Recipes </h1>
-						
-						<div className="addButtonContainer">
-							<RecipeBodyButton  buttonStyle='success' buttonTitle='Add recipe' onModalToggle={this.toggleAddModal} />
-						</div>
-						
-						<hr/>
-						
-					</div>
+					<RecipesAddButtonTitle />
 					<ul className="ingredientsListContainer">{recipesArray}</ul>
 					
 					<RecipeAddModal show={this.state.showModal} onHide={this.toggleAddModal} />
@@ -106,7 +100,7 @@ var MainComponent = React.createClass({
 });
 
 // -------------------------------------------------
-// GENERIC
+// GENERAL
 // -------------------------------------------------
 
 var AppImage = React.createClass({
@@ -114,12 +108,12 @@ var AppImage = React.createClass({
 	src: PropTypes.string,
 	
 	render: function() {
-		return <img className={this.props.class} src={this.props.src} />
+		return <img className={this.props.class} src={this.props.src} style={{width: this.props.width}}/>
 	}	
 });
 
 // -------------------------------------------------
-// HEADER 
+// APP HEADER 
 // -------------------------------------------------
 
 var AppHeader = React.createClass({
@@ -199,13 +193,38 @@ var SearchBar = React.createClass({
 // -------------------------------------------------
 
 var AppJumbotron = React.createClass({
+	
 	render: function() {
 		return (
-			<div className="jumbotronContainer">
-				<h3 className="jumbotronText">Your Best Friend <br /> In The Kitchen!</h3>
-				<AppImage class="jumbotronImage secondaryImage" src='./steak-min.jpg'/>
-				<AppImage class="jumbotronImage mainImage" src="./dessert-min.jpg"/>
-				<AppImage class="jumbotronImage secondaryImage" src="./shrimp-min.jpg"/>
+			<div>
+			
+				{/*LARGE SCREEN*/}
+				<MediaQuery query='(min-width: 910px)'>
+					<div className="jumbotronContainer">
+						<h3 className="jumbotronText">Your Best Friend <br /> In The Kitchen!</h3>
+						<AppImage class="jumbotronImage secondaryImage" src='./steak-min.jpg'/>
+						<AppImage class="jumbotronImage mainImage" src="./dessert-min.jpg"/>
+						<AppImage class="jumbotronImage secondaryImage" src="./shrimp-min.jpg"/>
+					</div>
+				</MediaQuery>
+				
+				{/*MEDIUM SCREEN*/}
+				<MediaQuery query='(min-width: 520px) and (max-width: 910px)'>
+					<div className="jumbotronContainer">
+						<h3 className="jumbotronText">Your Best Friend <br /> In The Kitchen!</h3>
+						<AppImage class="jumbotronImage secondaryImage" src='./steak-min.jpg' width='50%' />
+						<AppImage class="jumbotronImage secondaryImage" src="./shrimp-min.jpg" width='50%' />
+					</div>
+				</MediaQuery>
+				
+				{/*SMALL SCREEN*/}
+				<MediaQuery query='(max-width: 520px)'>
+					<div className="jumbotronContainer">
+						<h3 className="jumbotronText">Your Best Friend <br /> In The Kitchen!</h3>
+						<AppImage class="jumbotronImage mainImage" src="./shrimp-min.jpg" width='100%'/>
+					</div>
+				</MediaQuery>
+				
 			</div>
 		)
 	}	
@@ -217,6 +236,38 @@ var AppJumbotron = React.createClass({
 // -------------------------------------------------
 // BODY
 // -------------------------------------------------
+var RecipesAddButtonTitle = React.createClass({
+	render: function() {
+		return (
+			<div className="addButtonTitleContainer">
+					
+				<h1 className="appTitle"> Your Recipes </h1>
+				
+				<div className="addButtonContainer">
+					<RecipeBodyButton  buttonStyle='success' buttonTitle='Add recipe' onModalToggle={this.toggleAddModal} />
+				</div>
+				
+				<hr/>
+					
+			</div>
+		)
+	}	
+});
+
+var RecipesListContainer = React.createClass({
+	
+	recipesArray: PropTypes.array,
+	
+	render: function() {
+		return <ul className="ingredientsListContainer">{this.props.recipesArray}</ul>
+	},
+
+});
+
+
+// -------------------------------------------------
+// INDIVIDUAL RECIPES
+// -------------------------------------------------
 
 var RecipeContainer = React.createClass({
 	
@@ -224,6 +275,7 @@ var RecipeContainer = React.createClass({
 	recipeIngredients: PropTypes.array,
 	recipeId: PropTypes.number,
 	onDeleteRecipe: PropTypes.func,
+	recipeWidth: PropTypes.string,
 	
 	getInitialState: function() {
 		return {
@@ -246,9 +298,6 @@ var RecipeContainer = React.createClass({
 		/*
 		 * state is a dictionary
 		 */
-		 
-		console.log('!!! --- State received')
-		console.log(state)
 		
 		this.props.onUpdateLocalStorage(state);
 		this.setState(state);	
@@ -256,14 +305,13 @@ var RecipeContainer = React.createClass({
 
 	render: function() {
 		
-		// console.log('----> RecipeContainer')
-		// console.log(this.props.recipeName);
-		
 		return (
+	
 			<div className="recipeContainer">
 				<RecipeHeader recipeName={this.state.recipeName} recipeId={this.props.recipeId}/>
 				<RecipeBody recipeName={this.state.recipeName} recipeIngredients={this.state.recipeIngredients} recipeId={this.props.recipeId} onUpdateContainer={this.updateContainer} onDeleteRecipe={this.props.onDeleteRecipe}/>
 			</div>
+				
 		);
 	}
 });
@@ -278,8 +326,6 @@ var RecipeHeader = React.createClass({
 	 * SlideToggle the corresponding window with the same id as the header
 	 */
 	handleUserClick: function(e) {
-		console.log(e);
-		// $(e.target).css("width", 50%);
 		var id = '#window' + this.props.recipeId.toString() + '';
 		$(id).slideToggle(700);
 	},
@@ -314,9 +360,6 @@ var RecipeBody = React.createClass({
 		 * or containing recipeName and recipeIngredients if the user clicked on the change button
 		 */
 		
-		// console.log('--- Toggle received by edit')
-		// console.log(state)
-		
 		if ( statePassed != {} ) {
 			this.updateContainer(statePassed);
 		}
@@ -342,9 +385,6 @@ var RecipeBody = React.createClass({
 	},
 	
 	render: function() {
-		
-		// console.log('----> Recipe body')
-		// console.log(this.getRecipeProperties());
 		
 		return (
 			<div className="recipeWindow" id={"window" + this.props.recipeId.toString()}>
@@ -542,12 +582,6 @@ var RecipeEditModal = React.createClass({
 	
 	render: function() {
 		
-		// console.log(' ---->Inside modal')
-		// console.log(' -->Name')
-		// console.log(this.props.recipeProperties.name)
-		// console.log('--> Ingredients')
-		// console.log(this.props.recipeProperties.ingredients)
-		
 		return (
 			<Modal show={this.props.show} onHide={this.handleClose}>
 				<Modal.Header closeButton>
@@ -596,8 +630,6 @@ var RecipeDeleteModal = React.createClass({
 	onDeleteRecipe: PropTypes.func,
 	
 	handleDelete: function(e) {
-		
-		// console.log('DELETING ----------------------------')
 		
 		this.props.onDeleteRecipe(this.props.recipeName);
 		this.props.onHide();
