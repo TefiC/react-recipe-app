@@ -90,6 +90,8 @@ var MainComponent = React.createClass({
 					
 					<RecipesListContainer recipesArray={recipesArray}/>
 					
+					<hr className="mainHorizontalRule"/>
+					
 					<RecipeAddModal show={this.state.showModal} onHide={this.toggleAddModal} />
 					
 				</div>
@@ -242,12 +244,22 @@ var RecipesAddButtonTitle = React.createClass({
 	render: function() {
 		return (
 			<div className="addButtonTitleContainer">
-					
-				<h1 className="appTitle"> Your Recipes </h1>
+			
+				{/*Large SCREEN*/}
+				<MediaQuery query='(min-width: 450px)' className="addButtonTitleContainer">
+					<h1 className="appTitle"> Your Recipes </h1>
+					<div className="addButtonContainer">
+						<RecipeBodyButton  buttonStyle='success' buttonTitle='Add recipe' onModalToggle={this.props.onToggleModal} />
+					</div>
+				</MediaQuery>
 				
-				<div className="addButtonContainer">
-					<RecipeBodyButton  buttonStyle='success' buttonTitle='Add recipe' onModalToggle={this.props.onToggleModal} />
-				</div>
+				{/*Small SCREEN*/}
+				<MediaQuery query='(max-width: 450px)' className="addButtonTitleContainer">
+					<h1 className="appTitle" style={{'width': '100%'}}> Your Recipes </h1>
+					<div className="addButtonContainer" style={{'width': '100%'}}>
+						<RecipeBodyButton  buttonStyle='success' buttonTitle='Add recipe' onModalToggle={this.props.onToggleModal} />
+					</div>
+				</MediaQuery>
 				
 				<hr/>
 					
@@ -308,12 +320,10 @@ var RecipeContainer = React.createClass({
 	render: function() {
 		
 		return (
-	
 			<div className="recipeContainer">
 				<RecipeHeader recipeName={this.state.recipeName} recipeId={this.props.recipeId}/>
 				<RecipeBody recipeName={this.state.recipeName} recipeIngredients={this.state.recipeIngredients} recipeId={this.props.recipeId} onUpdateContainer={this.updateContainer} onDeleteRecipe={this.props.onDeleteRecipe}/>
 			</div>
-				
 		);
 	}
 });
