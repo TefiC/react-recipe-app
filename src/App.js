@@ -85,8 +85,10 @@ var MainComponent = React.createClass({
 				<SearchBar show={this.state.showNavbar}/>
 				<AppJumbotron />
 				<div className="appMainDiv">
-					<RecipesAddButtonTitle />
-					<ul className="ingredientsListContainer">{recipesArray}</ul>
+				
+					<RecipesAddButtonTitle onToggleModal={this.toggleAddModal}/>
+					
+					<RecipesListContainer recipesArray={recipesArray}/>
 					
 					<RecipeAddModal show={this.state.showModal} onHide={this.toggleAddModal} />
 					
@@ -244,7 +246,7 @@ var RecipesAddButtonTitle = React.createClass({
 				<h1 className="appTitle"> Your Recipes </h1>
 				
 				<div className="addButtonContainer">
-					<RecipeBodyButton  buttonStyle='success' buttonTitle='Add recipe' onModalToggle={this.toggleAddModal} />
+					<RecipeBodyButton  buttonStyle='success' buttonTitle='Add recipe' onModalToggle={this.props.onToggleModal} />
 				</div>
 				
 				<hr/>
