@@ -51,9 +51,12 @@ var MainComponent = React.createClass({
 	},
 	
 	updateLocalStorage: function(state) {
-		var recipesDict = reactLocalStorage.getObject('recipesDict');
-		recipesDict[state.recipeName] = {'ingredients': state.recipeIngredients, 'instructions':state.recipeInstructions};
-		reactLocalStorage.setObject('recipesDict', recipesDict);
+		
+		if (state.recipeName != undefined) {
+			var recipesDict = reactLocalStorage.getObject('recipesDict');
+			recipesDict[state.recipeName] = {'ingredients': state.recipeIngredients, 'instructions':state.recipeInstructions};
+			reactLocalStorage.setObject('recipesDict', recipesDict);
+		}
 	},
 	
 	deleteRecipe: function(recipeName) {
@@ -319,6 +322,8 @@ var RecipeContainer = React.createClass({
 		/*
 		 * state is a dictionary
 		 */
+		console.log('CONTAINER STATE')
+		console.log(state)
 		
 		this.props.onUpdateLocalStorage(state);
 		this.setState(state);	
@@ -365,6 +370,7 @@ var RecipeBody = React.createClass({
 	recipeInstructions: PropTypes.string,
 	recipeId: PropTypes.number,
 	onDeleteRecipe: PropTypes.func,
+	onUpdateContainer: PropTypes.func,
 	
 	getInitialState: function() {
 		return {
@@ -379,6 +385,9 @@ var RecipeBody = React.createClass({
 		 * statePassed is an object. Empty if the user clicked on the x button, 
 		 * or containing recipeName and recipeIngredients if the user clicked on the change button
 		 */
+		 
+		 console.log('EDIT')
+		 console.log(statePassed)
 		
 		if ( statePassed != {} ) {
 			this.updateContainer(statePassed);
