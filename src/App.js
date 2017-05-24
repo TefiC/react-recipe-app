@@ -608,7 +608,7 @@ var RecipeAddModal = React.createClass({
 								inputRef={(input) => this.inputIngredients = input}
 								componentClass="textarea"
 								value={this.state.recipeIngredients}
-								placeholder= "Enter Ingredients"
+								placeholder= "Enter Ingredients followed by its quantity and separate ingredients with a comma. e.g Flour 3 cups, Butter 250mg"
 								onChange={this.handleChange} />
 						</FormGroup>
 						<ControlLabel>
@@ -723,7 +723,7 @@ var RecipeEditModal = React.createClass({
 								inputRef={(input) => this.inputIngredients = input}
 								componentClass="textarea"
 								value={this.state.recipeIngredients}
-								placeholder= "Edit Ingredients"
+								placeholder= "Enter Ingredients followed by its quantity and separate ingredients with a comma. e.g Flour 3 cups, Butter 250mg"
 								onChange={this.handleChange} />
 						</FormGroup>
 						<ControlLabel>
