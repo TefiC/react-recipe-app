@@ -315,6 +315,56 @@ hr {
 }
 
 
+/*SOCIAL BAR */
+
+.socialBarContainer {
+    width: 80%;
+    margin: 25px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.barSecondContainer {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 650px;
+}
+
+.socialIconContainer {
+    height: 80px;
+    text-align: center;
+    margin: 15px;
+}
+
+.small-icon {
+    width: 100%;
+}
+
+.medium-icon {
+    width: 50%;
+}
+
+.large-icon {
+    width: 24%;
+}
+
+.socialIconImgContainer {
+    height: 100%;
+    width: 100%;
+    max-width: 80px;
+}
+
+.socialIconLink {
+    cursor: pointer;
+}
+
+
 /*FOOTER*/
 
 .footerMainContainer {

@@ -99,6 +99,8 @@ var MainComponent = React.createClass({
 					
 					<hr className="mainHorizontalRule"/>
 					
+					<SocialMediaBar />
+					
 					<RecipeAddModal show={this.state.showModal} onHide={this.toggleAddModal} />
 					
 				</div>
@@ -480,6 +482,60 @@ var RecipeIngredient = React.createClass({
 	render: function() {
 		return <span className="ingredient"><p className="ingredientText">{this.props.ingredient}</p></span>; 
 	}
+});
+
+// -------------------------------------------------
+// SOCIAL MEDIA BAR
+// -------------------------------------------------
+
+var SocialMediaBar = React.createClass({
+	render: function() {
+		return (
+			<div className="socialBarContainer">
+			
+				<h2 className="ingredientsTitle">Follow us on: </h2>
+			
+				<MediaQuery query='(max-width: 390px)' className="barSecondContainer">
+					<SocialMediaIcon width='70%' href="#" src="./twitter.png" />
+					<SocialMediaIcon width='70%' href="#" src="./instagram.png" />
+					<SocialMediaIcon width='70%' href="#" src="./facebook.png" />
+					<SocialMediaIcon width='70%' href="#" src="./linkedin.png" />
+				</MediaQuery>
+				
+				<MediaQuery query='(min-width: 390px) and (max-width: 720px)' className="barSecondContainer">
+					<SocialMediaIcon width='30%' href="#" src="./twitter.png" />
+					<SocialMediaIcon width='30%' href="#" src="./instagram.png" />
+					<SocialMediaIcon width='30%' href="#" src="./facebook.png" />
+					<SocialMediaIcon width='30%' href="#" src="./linkedin.png" />
+				</MediaQuery>
+				
+				<MediaQuery query='(min-width: 720px)' className="barSecondContainer">
+					<SocialMediaIcon width='19%' href="#" src="./twitter.png" />
+					<SocialMediaIcon width='19%' href="#" src="./instagram.png" />
+					<SocialMediaIcon width='19%' href="#" src="./facebook.png" />
+					<SocialMediaIcon width='19%' href="#" src="./linkedin.png" />
+				</MediaQuery>
+			
+			</div>
+		)
+	}	
+});
+
+var SocialMediaIcon = React.createClass({
+	
+	width: PropTypes.string,
+	src: PropTypes.string,
+	href: PropTypes.string,
+	
+	render: function() {
+		return (
+			<div className="socialIconContainer" style={{'width': this.props.width}}>
+				<a className="socialIconLink" href={this.props.href}>
+					<img className="socialIconImgContainer" src={this.props.src} />
+				</a>
+			</div>
+		)
+	}	
 });
 
 // -------------------------------------------------
