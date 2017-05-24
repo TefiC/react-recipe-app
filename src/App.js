@@ -21,8 +21,8 @@ var MainComponent = React.createClass({
 	componentWillMount: function() {
 
 		var recipesDictValue =  {
-			'Pizza': {'ingredients': ['Oregano', 'Cheese'], 'instructions':'sfsdfds'},
-			'Donuts': {'ingredients':['Chocolate', 'Butter'], 'instructions':'dsfsdf'}
+			'Pizza': {'ingredients': ['Oregano', 'Cheese'], 'instructions':'Mix all ingredients in a bowl...'},
+			'Donuts': {'ingredients':['Chocolate', 'Butter'], 'instructions':'Melt the chocolate and mix...'}
 		}
 		
 		if (Object.keys(reactLocalStorage.getObject('recipesDict')).length == 0) {
@@ -608,7 +608,7 @@ var RecipeAddModal = React.createClass({
 								inputRef={(input) => this.inputIngredients = input}
 								componentClass="textarea"
 								value={this.state.recipeIngredients}
-								placeholder= "Enter Ingredients followed by its quantity and separate ingredients with a comma. e.g Flour 3 cups, Butter 250mg"
+								placeholder= "Enter Ingredients e.g Flour 3 cups, Butter 250mg"
 								onChange={this.handleChange} />
 						</FormGroup>
 						<ControlLabel>
@@ -723,7 +723,7 @@ var RecipeEditModal = React.createClass({
 								inputRef={(input) => this.inputIngredients = input}
 								componentClass="textarea"
 								value={this.state.recipeIngredients}
-								placeholder= "Enter Ingredients followed by its quantity and separate ingredients with a comma. e.g Flour 3 cups, Butter 250mg"
+								placeholder= "Enter Ingredients e.g Flour 3 cups, Butter 250mg"
 								onChange={this.handleChange} />
 						</FormGroup>
 						<ControlLabel>
