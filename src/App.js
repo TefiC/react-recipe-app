@@ -10,11 +10,19 @@ import './App.css';
 
 var MainComponent = React.createClass({
 	
+	getInitialState: function() {
+		return {
+			'recipesDict': {},
+			'showModal': false,
+			'showNavbar': false
+		};	
+	},
+	
 	componentWillMount: function() {
 
 		var recipesDictValue =  {
-			'Pizza': ['Oregano', 'Cheese'],
-			'Donuts': ['Chocolate', 'Butter']
+			'Pizza': {'ingredients': ['Oregano', 'Cheese'], 'instructions':'sfsdfds'},
+			'Donuts': {'ingredients':['Chocolate', 'Butter'], 'instructions':'dsfsdf'}
 		}
 		
 		if (Object.keys(reactLocalStorage.getObject('recipesDict')).length == 0) {
@@ -25,20 +33,15 @@ var MainComponent = React.createClass({
 		
 	},
 	
-	getInitialState: function() {
-		return {
-			'recipesDict': {},
-			'showModal': false,
-			'showNavbar': false
-		};	
-	},
-	
 	toggleAddModal: function(state) {
 		
-		this.updateLocalStorage(state);
 		
+		if (state.recipeName != undefined) {
+			this.updateLocalStorage(state);
+		} 
+	
 		var newState = !this.state.showModal;
-		this.setState({'recipesDict': reactLocalStorage.getObject('recipesDict'), 'showModal': newState, 'showNavbar': false});
+		this.setState({'recipesDict': reactLocalStorage.getObject('recipesDict'), 'showModal': newState, 'showNavbar': this.state.showNavbar});
 	},
 	
 	toggleNavbar: function() {
@@ -49,7 +52,7 @@ var MainComponent = React.createClass({
 	
 	updateLocalStorage: function(state) {
 		var recipesDict = reactLocalStorage.getObject('recipesDict');
-		recipesDict[state.recipeName] = state.recipeIngredients;
+		recipesDict[state.recipeName] = {'ingredients': state.recipeIngredients, 'instructions':state.recipeInstructions};
 		reactLocalStorage.setObject('recipesDict', recipesDict);
 	},
 	
@@ -67,15 +70,16 @@ var MainComponent = React.createClass({
 		
 		var recipesDict = this.state.recipesDict;
 		
+		
 		var recipeId = 0
 		var updateLocalStorage = this.updateLocalStorage;
 		var deleteRecipe = this.deleteRecipe;
 		
 		var recipesArray = Object.keys(recipesDict).map(function(recipe) {
 			recipeId += 1
-			
+
 			return 	(
-				<RecipeContainer onDeleteRecipe={deleteRecipe} onUpdateLocalStorage={updateLocalStorage} recipeName={recipe} recipeIngredients={recipesDict[recipe]} recipeId={recipeId}/>
+				<RecipeContainer onDeleteRecipe={deleteRecipe} onUpdateLocalStorage={updateLocalStorage} recipeName={recipe} recipeIngredients={recipesDict[recipe].ingredients} recipeInstructions={recipesDict[recipe].instructions} recipeId={recipeId}/>
 			)
 		});
 		
@@ -287,6 +291,7 @@ var RecipeContainer = React.createClass({
 	
 	recipeName: PropTypes.string,
 	recipeIngredients: PropTypes.array,
+	recipeInstructions: PropTypes.string,
 	recipeId: PropTypes.number,
 	onDeleteRecipe: PropTypes.func,
 	recipeWidth: PropTypes.string,
@@ -294,7 +299,8 @@ var RecipeContainer = React.createClass({
 	getInitialState: function() {
 		return {
 			'recipeName': this.props.recipeName,
-			'recipeIngredients': this.props.recipeIngredients
+			'recipeIngredients': this.props.recipeIngredients,
+			'recipeInstructions': this.props.recipeInstructions
 		}	
 	},
 	
@@ -302,7 +308,8 @@ var RecipeContainer = React.createClass({
 	
 		var data = {
 			'recipeName': props.recipeName,
-			'recipeIngredients': props.recipeIngredients
+			'recipeIngredients': props.recipeIngredients,
+			'recipeInstructions': props.recipeInstructions
 		}
 		
 		this.setState(data)
@@ -322,7 +329,7 @@ var RecipeContainer = React.createClass({
 		return (
 			<div className="recipeContainer">
 				<RecipeHeader recipeName={this.state.recipeName} recipeId={this.props.recipeId}/>
-				<RecipeBody recipeName={this.state.recipeName} recipeIngredients={this.state.recipeIngredients} recipeId={this.props.recipeId} onUpdateContainer={this.updateContainer} onDeleteRecipe={this.props.onDeleteRecipe}/>
+				<RecipeBody recipeName={this.state.recipeName} recipeIngredients={this.state.recipeIngredients}  recipeInstructions={this.state.recipeInstructions} recipeId={this.props.recipeId} onUpdateContainer={this.updateContainer} onDeleteRecipe={this.props.onDeleteRecipe}/>
 			</div>
 		);
 	}
@@ -355,6 +362,7 @@ var RecipeBody = React.createClass({
 	
 	recipeName: PropTypes.string,
 	recipeIngredients: PropTypes.array,
+	recipeInstructions: PropTypes.string,
 	recipeId: PropTypes.number,
 	onDeleteRecipe: PropTypes.func,
 	
@@ -392,7 +400,8 @@ var RecipeBody = React.createClass({
 	getRecipeProperties: function() {
 		return {
 			'name': this.props.recipeName,
-			'ingredients': this.props.recipeIngredients
+			'ingredients': this.props.recipeIngredients,
+			'instructions': this.props.recipeInstructions
 		}
 	},
 	
@@ -402,7 +411,7 @@ var RecipeBody = React.createClass({
 			<div className="recipeWindow" id={"window" + this.props.recipeId.toString()}>
 				<h2 className="ingredientsTitle">..Ingredients..</h2>
 				<hr/>
-				<RecipeBodyList recipeIngredients={this.props.recipeIngredients}/>
+				<RecipeBodyList recipeIngredients={this.props.recipeIngredients} recipeInstructions={this.props.recipeInstructions}/>
 				<RecipeBodyButton buttonStyle="info" buttonTitle="Edit" onModalToggle={this.toggleEditModal}/>
 				<RecipeBodyButton buttonStyle="danger" buttonTitle="Delete" onModalToggle={this.toggleDeleteModal}/>
 				<RecipeEditModal show={this.state.showEditModal} onHide={this.toggleEditModal} recipeId={this.props.recipeId.toString()} recipeProperties={this.getRecipeProperties()}/>
@@ -416,6 +425,7 @@ var RecipeBody = React.createClass({
 var RecipeBodyList = React.createClass({
 	
 	recipeIngredients: PropTypes.array,
+	recipeInstructions: PropTypes.string,
 	
 	render: function() {
 		
@@ -425,7 +435,15 @@ var RecipeBodyList = React.createClass({
 			return <RecipeIngredient ingredient={ingredient}/>;
 		});
 		
-		return <div className="ingredientsContainer">{parsedIngredientsArray}</div>;
+		return (
+			<div className="ingredientsContainer">
+				{parsedIngredientsArray}
+				
+				<div className="instructionsContainer">
+					<p className="instructionsText">{this.props.recipeInstructions}</p>
+				</div>
+			</div>
+		)
 	}
 });
 
@@ -465,13 +483,14 @@ var RecipeAddModal = React.createClass({
 	getInitialState: function() {
 		return {
 			'recipeName': '',
-			'recipeIngredients': ''
+			'recipeIngredients': '',
+			'recipeInstructions': ''
 		};
 	},
 	
 	handleChange: function() {
 		
-		this.setState({'recipeName': this.inputName.value, 'recipeIngredients': this.inputIngredients.value});
+		this.setState({'recipeName': this.inputName.value, 'recipeIngredients': this.inputIngredients.value, 'recipeInstructions': this.inputInstructions.value});
 	},
 	
 	handleSubmit: function() {
@@ -480,10 +499,13 @@ var RecipeAddModal = React.createClass({
 		
 		var state = {
 			"recipeName": this.state.recipeName,
-			"recipeIngredients": ingredientsArray
+			"recipeIngredients": ingredientsArray,
+			"recipeInstructions": this.state.recipeInstructions
 		}
 		
 		this.props.onHide(state);
+		
+		this.setState({'recipeName': '', 'recipeIngredients':'', 'recipeInstructions':''})
 	},
 	
 	formatIngredients: function(ingredientsString) {
@@ -506,7 +528,7 @@ var RecipeAddModal = React.createClass({
 							<FormControl 
 								inputRef={(input) => this.inputName = input}
 								type="text"
-								value={this.state.name}
+								value={this.state.recipeName}
 								placeholder= "Enter New Recipe"
 								onChange={this.handleChange} />
 						</FormGroup>
@@ -517,8 +539,19 @@ var RecipeAddModal = React.createClass({
 							<FormControl 
 								inputRef={(input) => this.inputIngredients = input}
 								componentClass="textarea"
-								value={this.state.ingredients}
+								value={this.state.recipeIngredients}
 								placeholder= "Enter Ingredients"
+								onChange={this.handleChange} />
+						</FormGroup>
+						<ControlLabel>
+							Instructions for this recipe:
+						</ControlLabel>
+						<FormGroup>
+							<FormControl 
+								inputRef={(input) => this.inputInstructions = input}
+								componentClass="textarea"
+								value={this.state.recipeInstructions}
+								placeholder= "Enter Instructions"
 								onChange={this.handleChange} />
 						</FormGroup>
 					</form>
@@ -542,16 +575,17 @@ var RecipeEditModal = React.createClass({
 	getInitialState: function() {
 		return {
 			'recipeName': '',
-			'recipeIngredients': ''
+			'recipeIngredients': '',
+			'recipesInstructions': ''
 		};
 	},
 	
 	componentWillReceiveProps: function(props) {
-		this.setState({'recipeName': props.recipeProperties.name, 'recipeIngredients': props.recipeProperties.ingredients})
+		this.setState({'recipeName': props.recipeProperties.name, 'recipeIngredients': props.recipeProperties.ingredients, 'recipeInstructions':props.recipeProperties.instructions})
 	},
 	
 	handleChange: function() {
-		this.setState({'recipeName': this.inputName.value, 'recipeIngredients': this.inputIngredients.value});	
+		this.setState({'recipeName': this.inputName.value, 'recipeIngredients': this.inputIngredients.value, 'recipeInstructions':this.inputInstructions.value});	
 	},
 	
 	deletePreviousVersion: function(previousName) {
@@ -572,7 +606,8 @@ var RecipeEditModal = React.createClass({
 			
 			var state = {
 				'recipeName': this.state.recipeName,
-				'recipeIngredients': ingredientsArray
+				'recipeIngredients': ingredientsArray,
+				'recipeInstructions': this.state.recipeInstructions
 			}
 			
 			this.props.onHide(state);
@@ -621,6 +656,17 @@ var RecipeEditModal = React.createClass({
 								componentClass="textarea"
 								value={this.state.recipeIngredients}
 								placeholder= "Edit Ingredients"
+								onChange={this.handleChange} />
+						</FormGroup>
+						<ControlLabel>
+							Edit Instructions for this recipe:
+						</ControlLabel>
+						<FormGroup>
+							<FormControl 
+								inputRef={(input) => this.inputInstructions = input}
+								componentClass="textarea"
+								value={this.state.recipeInstructions}
+								placeholder= "Edit instructions"
 								onChange={this.handleChange} />
 						</FormGroup>
 					</form>

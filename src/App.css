@@ -280,6 +280,24 @@ html, body {
     
 }
 
+.instructionsContainer {
+    border: 1px solid #88eacc;
+    box-shadow: -1px 2px 8px #c5b3ba;
+    background-color: #50cea6;
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    word-wrap: break-word;
+}
+
+.instructionsText {
+    margin: 0;
+    padding: 7px;
+    width: 100%;
+}
+
 hr {
     width: 100%;
     margin-top: 10px;
