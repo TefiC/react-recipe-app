@@ -439,6 +439,9 @@ var RecipeBodyList = React.createClass({
 			<div className="ingredientsContainer">
 				{parsedIngredientsArray}
 				
+				
+				<p className="ingredientsTitle">..Instructions..</p>
+				<hr/>
 				<div className="instructionsContainer">
 					<p className="instructionsText">{this.props.recipeInstructions}</p>
 				</div>
@@ -598,7 +601,7 @@ var RecipeEditModal = React.createClass({
 		
 		e.persist();
 		
-		if (this.state.recipeName != '' && this.state.recipeIngredients != '') {
+		if (this.state.recipeName != '' && this.state.recipeIngredients != '' && this.state.recipeInstructions != '') {
 			
 			this.deletePreviousVersion(this.props.recipeProperties.name);
 			
