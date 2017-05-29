@@ -105,7 +105,10 @@ var MainComponent = React.createClass({
 					
 				</div>
 				
-				<div className="footerMainContainer"></div>
+				<div className="footerMainContainer">
+					<p className="attributionText">Ⓒ An Estefania Cassingena N. site</p>
+				
+				</div>
 				
 			</div>
 		);
