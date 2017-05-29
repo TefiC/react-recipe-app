@@ -270,6 +270,15 @@ html, body {
                 margin-left: auto;
                 margin-right: auto;
                 
+                .ingredientsTitle {
+                    font-family: 'Merriweather', serif;
+                    font-size: 1.5rem;
+                    width: 100%;
+                    text-align: center;
+                    font-weight: bold;
+                    letter-spacing: 2px;
+                }
+                
                 .barSecondContainer {
                     width: 100%;
                     display: flex;

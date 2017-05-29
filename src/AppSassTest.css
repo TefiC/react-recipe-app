@@ -202,6 +202,13 @@ html, body {
         justify-content: center;
         margin-left: auto;
         margin-right: auto; }
+        html #root .appMainDiv .socialBarContainer .ingredientsTitle, body #root .appMainDiv .socialBarContainer .ingredientsTitle {
+          font-family: 'Merriweather', serif;
+          font-size: 1.5rem;
+          width: 100%;
+          text-align: center;
+          font-weight: bold;
+          letter-spacing: 2px; }
         html #root .appMainDiv .socialBarContainer .barSecondContainer, body #root .appMainDiv .socialBarContainer .barSecondContainer {
           width: 100%;
           display: flex;
