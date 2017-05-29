@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import {reactLocalStorage} from 'reactjs-localstorage';
 import { Modal, Button, FormControl, FormGroup, ControlLabel } from 'react-bootstrap/lib';
 import PropTypes from 'prop-types';
-import './App.css';
+import './AppSassTest.css';
 
 var MainComponent = React.createClass({
 	

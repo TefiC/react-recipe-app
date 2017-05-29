@@ -1,0 +1,368 @@
+@import url('https://fonts.googleapis.com/css?family=Merriweather|Raleway|Pacifico|Shadows+Into+Light+Two');
+
+$green-background: #588754;
+
+
+html, body {
+    height: 100%;
+    background-color: $green-background;
+    overflow-x: hidden;
+    
+    #root {
+        height: 100vh;
+        background-color: $green-background;
+        margin-bottom: 25px;
+        
+        // Header
+    
+        .appHeader {
+            height: 65px;
+            width: 100%;
+            background-color: white;
+            box-shadow: 0px 1px 10px gray;
+            position: relative;
+            z-index: 5;
+            display: flex;
+            
+            .headerTitleContainer {
+                width: 80%;
+                display: flex;
+                align-items: center;
+                
+                .headerTitleText {
+                    max-width: 100%;
+                    height: 100%;
+                    margin-left: 50px;
+                }
+                
+                .titleTextImg {
+                    max-width: 170px;
+                    height: 45px;
+                    margin-left: 50px;
+                }
+            }
+            
+            .burgerLogoContainer {
+                width: 20%;
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+                
+                .burgerIcon {
+                    height: 40px;
+                    width: 40px;
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+            }
+            
+            .burgerLogoContainer:hover {
+                background-color: #d4dad4;
+            }
+    
+        }
+        
+        // SEARCH BAR
+        
+        .searchBarContainer {
+            background: -webkit-linear-gradient(#342a07,#403112);
+            background: -o-linear-gradient(#342a07,#403112); /* For Opera 11.1 to 12.0 */
+            background: -moz-linear-gradient(#342a07,#403112); /* For Firefox 3.6 to 15 */
+            background: linear-gradient(#342a07,#403112); /* Standard syntax */
+            padding-top: 10px;
+            text-align: center;
+            justify-content: center;
+            display: none;
+        }
+        
+        // JUMBOTRON
+        
+        .jumbotronContainer {
+            display: flex;
+            height: 390px;
+            background-color: white;
+            position: relative;
+            z-index: 4;
+            border-bottom: 2px solid rgba(0, 0, 0, 0.25);
+            
+            .jumbotronImage {
+                width: calc(100vw/3);
+            }
+            
+            .jumbotronText {
+                position: absolute;
+                margin-top: 148px;
+                height: 160px;
+                text-align: center;
+                display: flex;
+                text-align: center;
+                align-items: center;
+                background-color: hsla(0,0%,100%,.45);
+                width: 100%;
+                text-align: center;
+                font-size: 5rem;
+                justify-content: center;
+                font-family: 'Shadows Into Light Two', cursive;
+                text-shadow: 1px 2px 2px #75817d;
+            }
+        }
+        
+        // BODY
+        
+        .appMainDiv {
+            
+            max-width: 1600px;
+            margin-right: auto;
+            margin-left: auto;
+            margin-bottom: 25px;
+            width: 95%;
+            background-color: #ffffff;
+            box-shadow: -2px 8px 10px rgba(64, 49, 18, 0.61);
+            padding: 25px;
+            position: relative;
+            border-radius: 0px 0px 15px 15px;
+            
+            .addButtonTitleContainer {
+                width: 100%;
+                max-width: 450px;
+                display: flex;
+                margin-right: auto;
+                margin-left: auto;
+                align-items: center;
+                text-align: center;
+                display: flex;
+                flex-wrap: wrap;
+                
+                .appTitle {
+                    text-align: center;
+                    font-family: 'Pacifico', cursive;
+                    margin-bottom: 25px;
+                    width: 70%;
+                }
+                
+                .addButtonContainer {
+                    width: 30%;
+                    position: relative;
+                    text-align: center;
+                }
+            }
+            
+            .ingredientsListContainer {
+                padding: 0;
+                display: flex;
+                flex-wrap: wrap;
+                max-width: 1200px;
+                margin-left: auto;
+                margin-right: auto;
+                justify-content: center;
+                
+                .recipeContainer {
+                    width: 30%;
+                    margin: 15px;
+                    width: 300px;
+                
+                    .recipeHeader {
+                        width: 100%;
+                        height: 170px;
+                        background-color: #096367;
+                        color: #fff;
+                        box-shadow: 0 1.5px 10px #dce2e0;
+                        position: relative;
+                        z-index: 2;
+                        cursor: pointer;
+                        border-radius: 15px;
+                        margin-bottom: 10px;
+                        background-image: url('./img/pot-min.jpg');
+                        background-size: cover;
+                        
+                        .headerTextContainer {
+                            background-color: rgba(58, 46, 13, 0.77);
+                            position: absolute;
+                            color: #fffefe;
+                            width: 100%;
+                            height: 40px;
+                            bottom: -12px;
+                            display: -webkit-box;
+                            display: -ms-flexbox;
+                            display: flex;
+                            -webkit-box-align: center;
+                            -ms-flex-align: center;
+                            align-items: center;
+                            -webkit-box-pack: center;
+                            -ms-flex-pack: center;
+                            justify-content: center;
+                            font-family: Raleway,sans-serif;
+                            font-weight: 700;
+                            font-size: 2rem;
+                        }
+                    }
+                    
+                    .recipeWindow {
+                        background-color: #f1fafa;
+                        margin-bottom: 10px;
+                        padding: 10px;
+                        display: None;
+                        box-shadow: 0 2px 9px #beb0b4;
+                        
+                        .ingredientsTitle {
+                            font-family: 'Merriweather', serif;
+                            font-size: 1.5rem;
+                            width: 100%;
+                            text-align: center;
+                            font-weight: bold;
+                            letter-spacing: 2px;
+                        }
+                        
+                        .ingredientsContainer {
+                            margin: 10px;
+                            
+                            .ingredient {
+                                display: block;
+                                margin: 2px 0;
+                                border: 0.8px solid #5eebbe;
+                                border-radius: 2px;
+                                margin: 15px 0px;
+                                padding: 5px;
+                                box-shadow: 0 2px 9px #beb0b4;
+                                
+                                .ingredientText {
+                                    letter-spacing: 1.5px;
+                                    height: 100%;
+                                    font-size: 1.5rem;
+                                    margin: 0;
+                                    padding: 6px;
+                                    text-align: center;
+                                }
+                            }
+                            
+                            .instructionsContainer {
+                                border: 1px solid #88eacc;
+                                box-shadow: -1px 2px 8px #c5b3ba;
+                                background-color: #50cea6;
+                                text-align: center;
+                                display: flex;
+                                flex-wrap: wrap;
+                                justify-content: center;
+                                align-items: center;
+                                word-wrap: break-word;
+                                
+                                .instructionsText {
+                                    margin: 0;
+                                    padding: 7px;
+                                    width: 100%;
+                                }
+                            }
+                        }
+                    }
+                }
+                
+            }
+            
+            // SOCIAL BAR
+            
+            .socialBarContainer {
+                width: 80%;
+                margin: 25px;
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                justify-content: center;
+                margin-left: auto;
+                margin-right: auto;
+                
+                .barSecondContainer {
+                    width: 100%;
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: center;
+                    max-width: 650px;
+                    
+                    .socialIconContainer {
+                        height: 80px;
+                        text-align: center;
+                        margin: 15px;
+                        
+                        .socialIconLink {
+                            cursor: pointer;
+                            
+                            .socialIconImgContainer {
+                                height: 100%;
+                                width: 100%;
+                                max-width: 80px;
+                            }
+                        }
+                    }
+                    
+                    .small-icon {
+                        width: 100%;
+                    }
+                    
+                    .medium-icon {
+                        width: 50%;
+                    }
+                    
+                    .large-icon {
+                        width: 24%;
+                    }
+                }
+            }
+        
+        }
+        
+        .footerMainContainer {
+            width: 100vw;
+            height: 10px;
+            background-color: white;
+            box-shadow: -3px -1px 20px #403112;
+            position: absolute;
+            z-index: 50;
+            bottom: 0;
+        }
+    }
+}
+
+.button {
+    margin: 5px;
+    height: 40px;
+    width: 100%;
+    max-width: 90px;
+}
+
+.btn-link {
+    color: white;
+    font-size: 1.9rem;
+    letter-spacing: 2.5px;
+    font-family: 'Shadows Into Light Two', cursive;
+}
+
+.btn-link:active,
+.btn-link:focus,
+.btn-link:hover {
+    color: white;
+    text-decoration: none;
+}
+
+.btn-link:hover {
+    font-size: 1.9rem;
+    font-weight: bold;
+}
+
+.hidden {
+    display: None;
+}
+
+hr {
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 0;
+    border-top: 3px solid #50cea6;
+}
+
+.mainHorizontalRule {
+    width:  80%;
+}
+
+.button {
+  margin: 5px;
+}
