@@ -106,7 +106,7 @@ var MainComponent = React.createClass({
 				</div>
 				
 				<div className="footerMainContainer">
-					<p className="attributionText">Ⓒ An Estefania Cassingena N. site</p>
+					<p className="attributionText">Ⓒ An Estefania Cass. N. site</p>
 				
 				</div>
 				
